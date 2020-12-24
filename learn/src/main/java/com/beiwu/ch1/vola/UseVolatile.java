@@ -1,38 +1,44 @@
 package com.beiwu.ch1.vola;
 
-import com.beiwu.ch1.tools.SleepTools;
-
 /**
  * @author zhoubing
  * @date 2020-12-24 09:57
- * 测试
+ * 测试volatile
+ *  打印语句会上锁  会刷新内存
+ *  sleep也会刷新内存
+ *  Thread.currentThread().getName();也会刷新
  */
+
 public class UseVolatile {
 
-//    private volatile boolean flag = false;
-    private static boolean flag = false;
+//    public volatile static boolean flag = false;
+    public static boolean flag = false;
 
-    public static void circule(){
-        while (!flag){
-            System.out.println(Thread.currentThread().getName() + ":loop once------");
-            SleepTools.ms(5);
+    public static void circule() throws InterruptedException {
+        while (!flag) {
+//            System.out.println(Thread.currentThread().getName() + ":loop once------");
+//            System.out.println("loop once------");
+//            Thread.sleep(5);
+//            Thread.currentThread().getName();
         }
         System.out.println(Thread.currentThread().getName() + ": end loop---------------");
     }
 
 
-    public static void main(String[] args) {
-        UseVolatile useVolatile = new UseVolatile();
+    public static void main(String[] args) throws InterruptedException {
         Thread thread = new Thread(() -> {
-            circule();
-        });
-        Thread thread2 = new Thread(() -> {
-            circule();
-        });
-        thread.start();
-        thread2.start();
+            try {
+                UseVolatile.circule();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        SleepTools.second(1);
-        flag = true;
+        });
+
+        thread.start();
+
+        Thread.sleep(2000);
+        System.out.println(Thread.currentThread()+"更改值");
+        UseVolatile.flag = true;
     }
 }
