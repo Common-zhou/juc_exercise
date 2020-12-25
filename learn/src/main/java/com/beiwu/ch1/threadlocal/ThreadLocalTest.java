@@ -6,10 +6,16 @@ package com.beiwu.ch1.threadlocal;
  */
 public class ThreadLocalTest {
     private class UseThreadLocal extends Thread {
-        ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+        ThreadLocal<Integer> threadLocal = new ThreadLocal<Integer>(){
+            @SuppressWarnings("unchecked")
+            @Override
+            protected Integer initialValue() {
+                return new Integer(0);
+            }
+        };
         public UseThreadLocal(){
             super();
-            threadLocal.set(new Integer(0));
+//            threadLocal.set(new Integer(0));
         }
 
         @Override
