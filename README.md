@@ -4,4 +4,4 @@ java高并发练习代码
 该部分内容与 java并发编程艺术 一书中相似
 
 测试链接
-[pom.xml](juc_exercise/learn/pom.xml)
+[pom.xml](./learn/pom.xml)
