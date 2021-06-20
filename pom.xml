@@ -4,13 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.beiwu.juc</groupId>
-        <artifactId>juc_exercise</artifactId>
-        <version>0.8</version>
-    </parent>
+    <groupId>com.beiwu.juc</groupId>
+    <artifactId>juc_exercise</artifactId>
+    <version>0.8</version>
 
-    <artifactId>learn</artifactId>
+    <modules>
+        <module>learn</module>
+        <module>demo1</module>
+    </modules>
 
     <build>
         <plugins>
