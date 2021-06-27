@@ -6,11 +6,13 @@
 
     <groupId>com.beiwu.juc</groupId>
     <artifactId>juc_exercise</artifactId>
+    <packaging>pom</packaging>
     <version>0.8</version>
 
     <modules>
         <module>learn</module>
         <module>demo1</module>
+        <module>learn2</module>
     </modules>
 
     <build>
