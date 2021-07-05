@@ -32,4 +32,13 @@ public class TaskResult<R> {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return "TaskResult{" +
+                "resultType=" + resultType +
+                ", data=" + data +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

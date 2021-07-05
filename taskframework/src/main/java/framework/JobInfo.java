@@ -22,11 +22,19 @@ public class JobInfo<R> {
     private final AtomicInteger successNum = new AtomicInteger(0);
     private final AtomicInteger totalProcessNum = new AtomicInteger(0);
 
-    public JobInfo(String jobName, int jobLength, ITaskProcessor<?, ?> iTaskProcessor) {
+    private CheckJobProcessor checkJobProcessor = CheckJobProcessor.getInstance();
+
+    // 单位是s
+    private final long expireTime;/*保留的工作的结果信息供查询的时长*/
+
+    public JobInfo(String jobName, int jobLength,
+                   ITaskProcessor<?, ?> iTaskProcessor,
+                   long expireTime) {
         this.jobName = jobName;
         this.jobLength = jobLength;
         this.resultQueue = new LinkedBlockingDeque<>(jobLength);
         this.iTaskProcessor = iTaskProcessor;
+        this.expireTime = expireTime;
     }
 
     public String getJobName() {
@@ -45,6 +53,18 @@ public class JobInfo<R> {
         return iTaskProcessor;
     }
 
+    public int getSuccessNum() {
+        return successNum.get();
+    }
+
+    public int getTotalNum() {
+        return totalProcessNum.get();
+    }
+
+    public int getFailureNum() {
+        return getTotalNum() - getSuccessNum();
+    }
+
     // 进来的时候不做校验，但是在它的上游 必须做校验
     public void addTaskResult(TaskResult<R> result) {
         if (TaskResultType.Success.equals(result.getResultType())) {
@@ -57,6 +77,7 @@ public class JobInfo<R> {
         if (jobLength == totalProcessNum.get()) {
             // 说明所有的都处理完成
             System.out.println(String.format("%s has processed all task", jobName));
+            checkJobProcessor.putJob(jobName, expireTime);
         }
 
     }
@@ -71,5 +92,10 @@ public class JobInfo<R> {
         }
         return results;
 
+    }
+
+    public String getTotalProgress() {
+        return "Success[" + successNum.get() + "]/Current[" + totalProcessNum.get()
+                + "] Total[" + jobLength + "]";
     }
 }

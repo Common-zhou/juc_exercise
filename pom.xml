@@ -13,6 +13,7 @@
         <module>learn</module>
         <module>demo1</module>
         <module>learn2</module>
+        <module>taskframework</module>
     </modules>
 
     <build>
