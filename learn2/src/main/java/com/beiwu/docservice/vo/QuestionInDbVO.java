@@ -15,6 +15,14 @@ public class QuestionInDbVO {
         this.detail = detail;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
     @Override
     public String toString() {
         return "QuestionInDbVO{" +

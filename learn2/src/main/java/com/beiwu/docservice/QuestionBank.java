@@ -26,10 +26,6 @@ public class QuestionBank {
         // 模拟20ms 的处理时间
         BusinessTools.businessMs(20);
 
-        if (!questionMap.containsKey(id)) {
-            // 代表不存在这个id
-            return null;
-        }
         return questionMap.get(id);
     }
 
