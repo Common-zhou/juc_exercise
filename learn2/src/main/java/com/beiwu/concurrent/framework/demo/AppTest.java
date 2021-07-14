@@ -32,7 +32,7 @@ public class AppTest {
                     System.out.println(pool.getTaskProgess(JOB_NAME));
                     System.out.println(taskDetail);
                 }
-                SleepTools.sleep(100);
+                SleepTools.sleepMs(100);
                 i++;
             }
         }

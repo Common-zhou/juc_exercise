@@ -27,6 +27,7 @@ public class RpcServiceV1 {
 
     private static final CompletionService<String> docMakeCompletionService =
         new ExecutorCompletionService<>(docMakeExecutorService);
+
     private static final CompletionService<String> docUploadCompletionService =
         new ExecutorCompletionService<>(docUploadExecutorService);
 
@@ -34,27 +35,31 @@ public class RpcServiceV1 {
         //首先初始化题库 题目数目
         QuestionBank.initBank();
         System.out.println("题库已经初始化完成");
-        int docCount = 15;
+        int docCount = 6;
         // 之后根据给定的数目 生成文档
         List<DocVO> list = DocGenerate.generate(docCount);
 
         long startTime = System.currentTimeMillis();
 
         for (DocVO docVO : list) {
-            docMakeExecutorService.submit(new MakeDocCallable(docVO));
+            docMakeCompletionService.submit(new MakeDocCallable(docVO));
         }
+        System.out.println("all doc make service has submitted.");
 
         for (int i = 0; i < docCount; i++) {
             Future<String> future = docMakeCompletionService.take();
-            docUploadExecutorService.submit(new UploadTask(future.get()));
+            docUploadCompletionService.submit(new UploadTask(future.get()));
         }
+        System.out.println("all doc upload service has submitted.");
+
 
         for (int i = 0; i < docCount; i++) {
             Future<String> future = docUploadCompletionService.take();
-            System.out.println(future.get());
         }
         System.out.println(String.format("consume time: %s", (System.currentTimeMillis() - startTime)));
 
+        docMakeExecutorService.shutdown();
+        docUploadExecutorService.shutdown();
     }
 
     public static class MakeDocCallable implements Callable<String> {

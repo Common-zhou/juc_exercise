@@ -17,7 +17,7 @@ public class MyTask implements ITaskProcesser<Integer, Integer> {
         Random random = new Random();
         int tmp = random.nextInt(500);
 
-        SleepTools.sleep(tmp);
+        SleepTools.sleepMs(tmp);
 
         if (tmp < 300) {
             // 正常返回

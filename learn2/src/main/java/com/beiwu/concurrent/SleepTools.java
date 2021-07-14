@@ -7,9 +7,17 @@ import java.util.concurrent.TimeUnit;
  * @date 2021-07-02 00:35
  */
 public class SleepTools {
-    public static void sleep(int ms){
+    public static void sleepMs(int ms){
         try {
             TimeUnit.MILLISECONDS.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sleepS(int seconds){
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

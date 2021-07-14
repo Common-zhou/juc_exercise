@@ -1,6 +1,5 @@
 package com.beiwu.docservice.utils;
 
-import com.beiwu.docservice.Constants;
 import com.beiwu.docservice.vo.DocVO;
 
 import java.util.ArrayList;

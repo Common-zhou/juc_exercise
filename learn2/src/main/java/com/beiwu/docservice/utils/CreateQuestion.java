@@ -1,11 +1,10 @@
 package com.beiwu.docservice.utils;
 
-import com.beiwu.docservice.Constants;
 import com.beiwu.docservice.vo.QuestionInDbVO;
 
 import java.util.Random;
 
-import static com.beiwu.docservice.Constants.randomSeed;
+import static com.beiwu.docservice.utils.Constants.randomSeed;
 
 /**
  * @Author zhoubing
