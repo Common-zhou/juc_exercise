@@ -16,7 +16,11 @@ public class CreateQuestion {
     public static QuestionInDbVO generateOne(Integer id) {
         int length = docRandomLength.nextInt(Constants.QUESTION_LENGTH) + 30;
 
-        return new QuestionInDbVO(id, generateDetail(length));
+        String detail = generateDetail(length);
+
+        String sha256 = EncryptUtils.encryptBySHA256(detail);
+
+        return new QuestionInDbVO(id, detail, sha256);
     }
 
     public static String generateDetail(int length) {

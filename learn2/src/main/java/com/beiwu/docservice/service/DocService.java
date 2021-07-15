@@ -3,6 +3,7 @@ package com.beiwu.docservice.service;
 import com.beiwu.docservice.bussiness.BusinessTools;
 import com.beiwu.docservice.service.question.SingleQstService;
 import com.beiwu.docservice.vo.DocVO;
+
 import java.util.Random;
 
 /**
@@ -34,6 +35,10 @@ public class DocService {
         }
 
         return String.format("complete_%s_%s.pdf", System.currentTimeMillis(), srcDocVO.getName());
+    }
+
+    public static String makeDocAsyn(DocVO srcDocVO) {
+        return "";
     }
 
 
