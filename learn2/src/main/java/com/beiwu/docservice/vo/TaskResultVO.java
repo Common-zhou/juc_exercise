@@ -1,6 +1,6 @@
 package com.beiwu.docservice.vo;
 
-import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 /**
  * @Author zhoubing
@@ -8,15 +8,23 @@ import java.util.concurrent.Callable;
  */
 public class TaskResultVO {
     private final String questionDetail;
-    private final Callable<QuestionInCacheVO> questionFuture;
+    private final Future<QuestionInCacheVO> questionFuture;
 
     public TaskResultVO(String questionDetail) {
         this.questionDetail = questionDetail;
         this.questionFuture = null;
     }
 
-    public TaskResultVO(Callable<QuestionInCacheVO> questionFuture) {
+    public TaskResultVO(Future<QuestionInCacheVO> questionFuture) {
         this.questionFuture = questionFuture;
         this.questionDetail = null;
+    }
+
+    public String getQuestionDetail() {
+        return questionDetail;
+    }
+
+    public Future<QuestionInCacheVO> getQuestionFuture() {
+        return questionFuture;
     }
 }

@@ -30,4 +30,11 @@ public class QuestionBank {
         return questionMap.get(id);
     }
 
+    public static String queryBySha(Integer id) {
+        // 模拟20ms 的处理时间
+        BusinessTools.businessMs(20);
+
+        return questionMap.get(id).getSha();
+    }
+
 }

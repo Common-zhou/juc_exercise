@@ -23,7 +23,7 @@ public class RpcServiceV2 {
         QuestionBank.initBank();
         System.out.println("题库初始化完成");
 
-        int docLength = 15;
+        int docLength = 60;
         List<DocVO> docList = DocGenerate.generate(docLength);
 
         long startTime = System.currentTimeMillis();
@@ -46,13 +46,12 @@ public class RpcServiceV2 {
         for (int i = 0; i < docLength; i++) {
             try {
                 Future<String> future = docUploadCompletionService.take();
-                //System.out.println(future.get());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
-        System.out.println(String.format("total consume time: [%.2f]", (System.currentTimeMillis() - startTime) / 1000.0));
+        System.out.println(String.format("total consume time: [%.2f]s", (System.currentTimeMillis() - startTime) / 1000.0));
         makeDocService.shutdown();
         uploadDocService.shutdown();
 
@@ -68,7 +67,7 @@ public class RpcServiceV2 {
         @Override
         public String call() throws Exception {
             long startTime = System.currentTimeMillis();
-            String doc = DocService.makeDoc(pengingDoc);
+            String doc = DocService.makeDocAsyn(pengingDoc);
             System.out.println(String.format("doc:[%s] has been made,consume time: %.2f s", doc, (System.currentTimeMillis() - startTime) / 1000.0));
             return doc;
         }
