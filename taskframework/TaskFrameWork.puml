@@ -1,0 +1,65 @@
+@startuml
+'https://plantuml.com/class-diagram
+interface Runnable
+
+TaskResultType <--* TaskResult
+TaskResult <--* ITaskProcessor
+ITaskProcessor <--* JobInfo
+TaskResult <--* JobInfo
+Runnable <--* PendingJobTask
+PendingJobTask <--* PendingJobPool
+JobInfo <--* PendingJobPool
+
+enum TaskResultType{
+Success
+Failure
+Exception
+}
+
+class TaskResult<R>{
+String message
+R data
+TaskResultType resultType
+}
+
+interface ITaskProcessor<T,R>{
+TaskResult<R> execute(T processData)
+}
+
+class JobInfo<R>{
+ITaskProcessor<R> iTaskProcessor
+String jobString
+int jobLength
+BlockingQueue<TaskResult> results
+
+'添加结果的方法'
+void addTaskResult(TaskResult<R> taskResult);
+'获取所有结果的方法'
+List<TaskResult<R>> getResults();
+}
+
+class PendingJobTask<T>{
+'构造方法  传入的参数为jobInfo,和数据。之所以没有返回数据是因为，处理好之后
+'数据会通过JobInfo存储'
++ PendingJobTask(JobInfo jobInfo,T processData)
+
++ run(T processData)
+''
+}
+
+class PendingJobPool{
+'线程池  执行线程所用'
+-ExecutorService service
+-Map<String, JobInfo> map
+
+- PendingJobPool()
+'注册job所用，就是往map中插入一个JobInfo，key为jobName'
++ registerJob(String jobName,int jobLength,ITaskProcessor iTaskProcessor,long expireDate)
+'放一个任务，即首先获取JobInfo，之后新建一个PendingJobTask对象，之后交给线程池执行'
++ putTask(String jobName, T processData)
+
+
+}
+
+
+@enduml

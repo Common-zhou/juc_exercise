@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.DelayQueue;
 
 /**
+ * 该类作用：维持一个延时队列，当延时队列中获取到元素时，说明该job需要从内存中清除，直接删除Map中key即可
  * @Author zhoubing
  * @Date 2021-07-05 10:58
  */
